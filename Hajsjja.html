@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contoh Halaman</title>
+</head>
+<style>
+  #likeButton {
+  background-color: #fff;
+  color: #000;
+}
+
+#likeButton.liked {
+  background-color: red;
+  color: #fff;
+}
+</style>
+<body>
+<button id="likeButton" onclick="toggleLike()">Like</button>
+<span id="likeCount">0</span> likes
+  <script>
+    let isLiked = localStorage.getItem("isLiked") === "true" ? true : false;
+let likeCount = parseInt(localStorage.getItem("likeCount")) || 0;
+
+const likeButton = document.getElementById("likeButton");
+const likeCountElement = document.getElementById("likeCount");
+
+updateLikeButton();
+
+function toggleLike() {
+  if (isLiked) {
+    unlike();
+  } else {
+    like();
+  }
+}
+
+function like() {
+  isLiked = true;
+  likeCount++;
+  updateLikeButton();
+  saveToLocalStorage();
+}
+
+function unlike() {
+  isLiked = false;
+  likeCount--;
+  updateLikeButton();
+  saveToLocalStorage();
+}
+
+function updateLikeButton() {
+  if (isLiked) {
+    likeButton.classList.add("liked");
+    likeButton.textContent = "Liked";
+  } else {
+    likeButton.classList.remove("liked");
+    likeButton.textContent = "Like";
+  }
+
+  likeCountElement.textContent = likeCount;
+}
+
+function saveToLocalStorage() {
+  localStorage.setItem("isLiked", isLiked);
+  localStorage.setItem("likeCount", likeCount);
+}
+  </script>
+</body>
+</html>
